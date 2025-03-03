@@ -1,0 +1,11 @@
+#!/bin/sh
+
+BASE_DIR='./...'
+if [ $# != 0 ]; then BASE_DIR="$1"; fi
+
+echo 'running go vet...'         && go vet                  $BASE_DIR && echo 'go vet completed' && \
+echo 'running golang-ci-lint...' && golangci-lint run       $BASE_DIR && echo 'golang-ci-lint run completed' && \
+echo 'running go build...'       && go build                $BASE_DIR && echo 'go build completed' && \
+echo 'running go test...'        && go test -cover -v       $BASE_DIR && echo 'go test completed' && \
+echo 'running gosec...'          && gosec                   $BASE_DIR && echo 'gosec completed' && \
+echo 'toolset completed'
