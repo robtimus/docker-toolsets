@@ -3,6 +3,7 @@
 BASE_DIR='./...'
 if [ $# != 0 ]; then BASE_DIR="$1"; fi
 
+echo 'running go get...'         && go get                  .         && echo 'go get completed' && \
 echo 'running go vet...'         && go vet                  $BASE_DIR && echo 'go vet completed' && \
 echo 'running golang-ci-lint...' && golangci-lint run       $BASE_DIR && echo 'golang-ci-lint run completed' && \
 echo 'running go build...'       && go build                $BASE_DIR && echo 'go build completed' && \

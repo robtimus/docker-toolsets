@@ -16,6 +16,7 @@ docker run -v <local-project-dir>:<project-dir> -w <project-dir> robtimus/go-too
 
 This will run:
 
+* `go get .` to install all dependencies
 * `go vet`
 * `golangci-lint run`
 * `go build`
