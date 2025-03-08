@@ -7,7 +7,7 @@ ARG GOJUNIT_VERSION=latest
 
 RUN apk update && apk add git && rm -rf /var/cache/apk/*
 
-RUN go install golang.org/x/tools/cmd/godoc@${GODOC_VERSION} \
+RUN    go install golang.org/x/tools/cmd/godoc@${GODOC_VERSION} \
     && go install github.com/jstemmer/go-junit-report@${GOJUNIT_VERSION} \
     && wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh \
     ;
