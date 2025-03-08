@@ -1,0 +1,5 @@
+#!/bin/sh
+
+docker build . --build-arg DOTNET_VERSION=8.0 --no-cache -t robtimus/dotnet-toolset:8.0
+docker push robtimus/dotnet-toolset:8.0
+docker tag robtimus/dotnet-toolset:8.0 robtimus/dotnet-toolset && docker push robtimus/dotnet-toolset
