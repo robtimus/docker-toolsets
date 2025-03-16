@@ -1,10 +1,14 @@
 #!/bin/sh
 
+set -e
+
 for v in 1.20 1.21; do
     docker build . --build-arg GO_VERSION=$v --build-arg GODOC_VERSION=v0.24.0 --no-cache -t robtimus/go-toolset:$v
+    docker run --rm robtimus/go-toolset:$v sh -c "go version && golangci-lint --version && gosec --version"
 done
 for v in 1.22 1.23 1.24; do
     docker build . --build-arg GO_VERSION=$v --no-cache -t robtimus/go-toolset:$v
+    docker run --rm robtimus/go-toolset:$v sh -c "go version && golangci-lint --version && gosec --version"
 done
 for v in 1.20 1.21 1.22 1.23 1.24; do
     docker push robtimus/go-toolset:$v
