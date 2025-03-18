@@ -53,7 +53,7 @@ for v in 5.6; do
     docker run --rm robtimus/php-toolset:$v sh -c "php --version && php -r 'phpinfo();' | grep xdebug >/dev/null && phpcs --version"
 done
 for v in 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2 8.3 8.4; do
-    #docker build . --build-arg PHP_VERSION=$v $(xdebug_version_argument $v) $(phpstan_version_argument $v) $(phpcs_version_argument -v) --no-cache -t robtimus/php-toolset:$v
+    docker build . --build-arg PHP_VERSION=$v $(xdebug_version_argument $v) $(phpstan_version_argument $v) $(phpcs_version_argument -v) --no-cache -t robtimus/php-toolset:$v
     # no need to show the xdebug version separately, that's included in php --version
     docker run --rm robtimus/php-toolset:$v sh -c "php --version && php -r 'phpinfo();' | grep xdebug >/dev/null && phpstan --version && phpcs --version"
 done
