@@ -1,0 +1,65 @@
+# Copyright 2025 Rob Spoor
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Update OWASP dependency check
+
+on:
+  workflow_dispatch:
+    inputs:
+      rebuild:
+        description: 'Rebuild from scratch, ignoring any existing database'
+        required: false
+        type: boolean
+        default: false
+  schedule:
+    - cron: '0 7,19 * * *'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    concurrency: owasp-dependency-check
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Fetch data
+        if: ${{ ! inputs.rebuild }}
+        run: |
+          mkdir -p data
+          docker run -v `pwd`/data:/data-extract --entrypoint= --pull always robtimus/owasp-dependency-check sh -c "cp -R /usr/share/dependency-check/data/* /data-extract/"
+        working-directory: ./owasp-dependency-check
+      - name: Build temp image
+        run: |
+          mkdir -p data
+          docker build . -t robtimus/owasp-dependency-check:tmp
+        working-directory: ./owasp-dependency-check
+      - name: Update data
+        run: |
+          docker run -v `pwd`/data:/usr/share/dependency-check/data -e "NVD_API_KEY=$NVD_API_KEY" robtimus/owasp-dependency-check:tmp --updateonly --nvdApiKey "$NVD_API_KEY"
+        working-directory: ./owasp-dependency-check
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+      - name: Build image
+        run: |
+          docker build . -t robtimus/owasp-dependency-check
+        working-directory: ./owasp-dependency-check
+      - name: Push image
+        run: |
+          docker push robtimus/owasp-dependency-check
+        working-directory: ./owasp-dependency-check
