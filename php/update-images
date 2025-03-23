@@ -2,6 +2,13 @@
 
 set -e
 
+php_versions="5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2 8.3 8.4"
+php_latest_version="8.4"
+
+if [ $# != 0 ]; then
+    php_versions="$*"
+fi
+
 function dockerfile_argument() {
     case $1 in
         5.6)
@@ -69,12 +76,12 @@ function phpstan_test_command() {
     esac
 }
 
-for v in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2 8.3 8.4; do
+for v in $php_versions; do
     docker build . $(dockerfile_argument $v) --build-arg PHP_VERSION=$v $(xdebug_version_argument $v) $(phpstan_version_argument $v) $(phpcs_version_argument -v) --no-cache -t robtimus/php-toolset:$v
     # no need to show the xdebug version separately, that's included in php --version
     docker run --rm robtimus/php-toolset:$v sh -c "php --version && php -r 'phpinfo();' | grep xdebug >/dev/null && $(phpstan_test_command $v) && phpcs --version"
 done
-for v in 5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2 8.3 8.4; do
+for v in $php_versions; do
     docker push robtimus/php-toolset:$v
 done
-docker tag robtimus/php-toolset:8.4 robtimus/php-toolset && docker push robtimus/php-toolset
+docker tag robtimus/php-toolset:$php_latest_version robtimus/php-toolset && docker push robtimus/php-toolset
