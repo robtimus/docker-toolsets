@@ -80,8 +80,10 @@ for v in $php_versions; do
     docker build . $(dockerfile_argument $v) --build-arg PHP_VERSION=$v $(xdebug_version_argument $v) $(phpstan_version_argument $v) $(phpcs_version_argument -v) --no-cache -t robtimus/php-toolset:$v
     # no need to show the xdebug version separately, that's included in php --version
     docker run --rm robtimus/php-toolset:$v sh -c "php --version && php -r 'phpinfo();' | grep xdebug >/dev/null && $(phpstan_test_command $v) && phpcs --version"
+    echo
 done
 for v in $php_versions; do
     docker push robtimus/php-toolset:$v
+    echo
 done
 docker tag robtimus/php-toolset:$php_latest_version robtimus/php-toolset && docker push robtimus/php-toolset

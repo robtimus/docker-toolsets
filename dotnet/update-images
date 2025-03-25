@@ -5,6 +5,9 @@ set -e
 docker build . --build-arg DOTNET_VERSION=8.0 --no-cache -t robtimus/dotnet-toolset:8.0
 # trx2junit has no help or version flag
 docker run --rm robtimus/dotnet-toolset:8.0 sh -c "dotnet --version && docfx -v && dotnet-sonarscanner -h && dotnet-dotcover -h"
+echo
 
 docker push robtimus/dotnet-toolset:8.0
+echo
+
 docker tag robtimus/dotnet-toolset:8.0 robtimus/dotnet-toolset && docker push robtimus/dotnet-toolset

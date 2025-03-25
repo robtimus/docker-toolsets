@@ -20,4 +20,4 @@ RUN    apk add --no-cache --virtual .build-deps $PHPIZE_DEPS linux-headers \
 
 ENV PATH=$PATH:${COMPOSER_HOME}/vendor/bin
 
-CMD sh
+CMD ["sh"]

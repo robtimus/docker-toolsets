@@ -17,4 +17,4 @@ COPY --from=securego/gosec /bin/gosec /go/bin/gosec
 
 ADD ./run-toolset /go/bin/run-toolset
 
-CMD run-toolset
+CMD ["run-toolset"]

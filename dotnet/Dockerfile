@@ -18,4 +18,4 @@ RUN    dotnet tool update docfx                         --version ${DOCFX_VERSIO
 
 ENV PATH=$PATH:${DOTNET_TOOL_PATH}
 
-CMD sh
+CMD ["sh"]

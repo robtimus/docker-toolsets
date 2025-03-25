@@ -26,8 +26,10 @@ function godoc_version_argument() {
 for v in $go_versions; do
     docker build . --build-arg GO_VERSION=$v $(godoc_version_argument $v) --no-cache -t robtimus/go-toolset:$v
     docker run --rm robtimus/go-toolset:$v sh -c "go version && golangci-lint --version && gosec --version"
+    echo
 done
 for v in $go_versions; do
     docker push robtimus/go-toolset:$v
+    echo
 done
 docker tag robtimus/go-toolset:$go_latest_version robtimus/go-toolset && docker push robtimus/go-toolset
