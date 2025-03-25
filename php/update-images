@@ -79,7 +79,7 @@ function phpstan_test_command() {
 for v in $php_versions; do
     docker build . $(dockerfile_argument $v) --build-arg PHP_VERSION=$v $(xdebug_version_argument $v) $(phpstan_version_argument $v) $(phpcs_version_argument -v) --no-cache -t robtimus/php-toolset:$v
     # no need to show the xdebug version separately, that's included in php --version
-    docker run --rm robtimus/php-toolset:$v sh -c "php --version && php -r 'phpinfo();' | grep xdebug >/dev/null && $(phpstan_test_command $v) && phpcs --version"
+    docker run --rm robtimus/php-toolset:$v sh -c "php --version && composer --version && php -r 'phpinfo();' | grep xdebug >/dev/null && $(phpstan_test_command $v) && phpcs --version"
     echo
 done
 for v in $php_versions; do
