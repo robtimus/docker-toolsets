@@ -1,4 +1,7 @@
 ARG GO_VERSION=1.24
+ARG GOSEC_VERSION=2.22.3
+
+FROM securego/gosec:${GOSEC_VERSION} AS gosec
 
 FROM golang:${GO_VERSION}-alpine
 
@@ -13,7 +16,7 @@ RUN    go install golang.org/x/tools/cmd/godoc@${GODOC_VERSION} \
     && wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/${GOLANGCI_LINT_VERSION}/install.sh | sh \
     ;
 
-COPY --from=securego/gosec /bin/gosec /go/bin/gosec
+COPY --from=gosec /bin/gosec /go/bin/gosec
 
 ADD ./run-toolset /go/bin/run-toolset
 
