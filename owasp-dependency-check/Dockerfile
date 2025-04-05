@@ -9,7 +9,7 @@ RUN "$JAVA_HOME/bin/jlink" \
         --output /jdk
 
 RUN    apk add --no-cache --virtual .build-deps curl \
-    && curl -Ls https://github.com/jeremylong/DependencyCheck/releases/download/v${DEPENDENCY_CHECK_VERSION}/dependency-check-${DEPENDENCY_CHECK_VERSION}-release.zip -o /tmp/dependency-check.zip \
+    && curl -Ls https://github.com/dependency-check/DependencyCheck/releases/download/v${DEPENDENCY_CHECK_VERSION}/dependency-check-${DEPENDENCY_CHECK_VERSION}-release.zip -o /tmp/dependency-check.zip \
     && unzip /tmp/dependency-check.zip -d /usr/share \
     && rm /tmp/dependency-check.zip
 
