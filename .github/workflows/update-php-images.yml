@@ -36,5 +36,5 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Update images
-        run: './update-images'
+        run: 'bash ./update-images'
         working-directory: './php'
