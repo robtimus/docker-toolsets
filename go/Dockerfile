@@ -18,6 +18,6 @@ RUN    go install golang.org/x/tools/cmd/godoc@${GODOC_VERSION} \
 
 COPY --from=gosec /bin/gosec /go/bin/gosec
 
-ADD ./run-toolset /go/bin/run-toolset
+ADD --chmod=+x ./run-toolset /go/bin/run-toolset
 
 CMD ["run-toolset"]
