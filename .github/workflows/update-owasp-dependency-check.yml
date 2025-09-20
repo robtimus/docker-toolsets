@@ -22,6 +22,11 @@ on:
         required: false
         type: boolean
         default: false
+  push:
+    branches:
+      - 'master'
+    paths:
+      - 'owasp-dependency-check/**'
   schedule:
     - cron: '0 7 * * *'
 
