@@ -1,6 +1,6 @@
 # owasp-dependency-check
 
-A Docker image containing the OWASP Dependency-Check tool including a database that should be no more than 12 hours old. This makes it usable in situations where updating the database isn't possible.
+A Docker image containing the OWASP Dependency-Check tool including a database that should be no more than 24 hours old. This makes it usable in situations where updating the database isn't possible.
 
 ## Usage
 
