@@ -3,8 +3,8 @@ ARG PHP_VERSION=8.4
 FROM php:${PHP_VERSION}-cli-alpine
 
 ARG COMPOSER_HOME=/usr/local/lib/composer
-ARG XDEBUG_VERSION=3.4.2
-ARG PHPSTAN_VERSION=2.1.28
+ARG XDEBUG_VERSION=3.4.5
+ARG PHPSTAN_VERSION=2.1.29
 ARG PHPCS_VERSION=3.13.4
 
 COPY --from=composer:lts /usr/bin/composer /usr/bin/composer
