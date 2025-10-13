@@ -1,6 +1,6 @@
 FROM eclipse-temurin:21-jdk-alpine AS build
 
-ARG DEPENDENCY_CHECK_VERSION=12.1.7
+ARG DEPENDENCY_CHECK_VERSION=12.1.8
 
 RUN "$JAVA_HOME/bin/jlink" \
         --compress=zip-6 \
