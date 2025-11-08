@@ -7,7 +7,7 @@ FROM golang:${GO_VERSION}-alpine
 
 ARG GODOC_VERSION=latest
 ARG GOJUNIT_VERSION=latest
-ARG GOLANGCI_LINT_VERSION=v2.6.0
+ARG GOLANGCI_LINT_VERSION=v2.6.1
 
 RUN apk update && apk add git && rm -rf /var/cache/apk/*
 
