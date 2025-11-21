@@ -2,12 +2,21 @@
 
 set -e
 
-docker build . --build-arg DOTNET_VERSION=8.0 --no-cache -t robtimus/dotnet-toolset:8.0
-# trx2junit has no help or version flag
-docker run --rm robtimus/dotnet-toolset:8.0 sh -c "dotnet --version && docfx -v && dotnet-sonarscanner -h && dotnet-dotcover -h"
-echo
+dotnet_versions="8.0 10.0"
+dotnet_latest_version="10.0"
 
-docker push robtimus/dotnet-toolset:8.0
-echo
+if [ $# != 0 ]; then
+    dotnet_versions="$*"
+fi
 
-docker tag robtimus/dotnet-toolset:8.0 robtimus/dotnet-toolset && docker push robtimus/dotnet-toolset
+for v in $dotnet_versions; do
+    docker build . --build-arg DOTNET_VERSION=$v --no-cache -t robtimus/dotnet-toolset:$v
+    # trx2junit has no help or version flag
+    docker run --rm robtimus/dotnet-toolset:$v sh -c "echo -n dotnet- && dotnet --version && echo -n docfx- && docfx -v && dotnet-sonarscanner -h | grep 'SonarScanner for .NET' && echo -n dotnet-coverage- && dotnet-coverage --version"
+    echo
+done
+for v in $dotnet_versions; do
+    docker push robtimus/dotnet-toolset:$v
+    echo
+done
+docker tag robtimus/dotnet-toolset:$dotnet_latest_version robtimus/dotnet-toolset && docker push robtimus/dotnet-toolset
