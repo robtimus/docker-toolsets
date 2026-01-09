@@ -1,0 +1,6 @@
+.settings
+.checkstyle
+.classpath
+.project
+dependency-check-report.*
+target
