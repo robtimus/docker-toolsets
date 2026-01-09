@@ -68,8 +68,13 @@ jobs:
       - name: Test image
         run: |
           mvn clean dependency:copy-dependencies
-          docker run -v `pwd`:/workspace -w /workspace robtimus/owasp-dependency-check --scan **/target/dependency/*.jar --noupdate
+          docker run -v `pwd`:/workspace -w /workspace robtimus/owasp-dependency-check --scan target/dependency/*.jar --noupdate
         working-directory: ./owasp-dependency-check/owasp-dependency-check-test
+      - uses: actions/upload-artifact@v6
+        with:
+          name: dependency-check-report
+          path: owasp-dependency-check/owasp-dependency-check-test/dependency-check-report.*
+          retention-days: 1
       - name: Docker login
         uses: docker/login-action@v3
         with:
