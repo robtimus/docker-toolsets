@@ -76,7 +76,7 @@ jobs:
           path: owasp-dependency-check/owasp-dependency-check-test/dependency-check-report.html
           retention-days: 1
       - name: Docker login
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
