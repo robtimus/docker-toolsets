@@ -1,11 +1,11 @@
 FROM eclipse-temurin:21-jdk-alpine AS build
 
-ARG DEPENDENCY_CHECK_VERSION=12.2.0
+ARG DEPENDENCY_CHECK_VERSION=12.2.1
 
 RUN "$JAVA_HOME/bin/jlink" \
         --compress=zip-6 \
         --module-path /opt/java/openjdk/jmods \
-        --add-modules java.base,java.compiler,java.datatransfer,jdk.crypto.ec,java.desktop,java.instrument,java.logging,java.management,java.naming,java.rmi,java.scripting,java.security.sasl,java.sql,java.transaction.xa,java.xml,jdk.unsupported \
+        --add-modules java.base,java.compiler,java.datatransfer,jdk.crypto.ec,java.desktop,java.instrument,java.logging,java.management,java.naming,java.rmi,java.scripting,java.security.sasl,java.sql,java.transaction.xa,java.xml,jdk.unsupported,jdk.net \
         --output /jdk
 
 RUN    apk add --no-cache --virtual .build-deps curl \
