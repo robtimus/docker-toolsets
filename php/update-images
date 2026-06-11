@@ -4,6 +4,7 @@ set -e
 
 php_versions="5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2 8.3 8.4 8.5"
 php_latest_version="8.5"
+date_postfix=`date +%Y%m%d`
 
 if [ $# != 0 ]; then
     php_versions="$*"
@@ -83,6 +84,8 @@ for v in $php_versions; do
     echo
 done
 for v in $php_versions; do
+    docker tag robtimus/php-toolset:$v robtimus/php-toolset:$v-$date_postfix
+    docker push robtimus/php-toolset:$v-$date_postfix
     docker push robtimus/php-toolset:$v
     echo
 done
