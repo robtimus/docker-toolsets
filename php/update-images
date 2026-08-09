@@ -50,7 +50,7 @@ function phpstan_version_argument() {
             echo "--build-arg PHPSTAN_VERSION=1.4.10"
             ;;
         7.2 | 7.3)
-            echo "--build-arg PHPSTAN_VERSION=1.12.33"
+            echo "--build-arg PHPSTAN_VERSION=1.12.34"
             ;;
         *)
             echo ""
