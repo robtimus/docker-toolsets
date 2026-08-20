@@ -2,8 +2,8 @@
 
 set -e
 
-go_versions="1.20 1.21 1.22 1.23 1.24 1.25 1.26"
-go_latest_version="1.26"
+go_versions="1.20 1.21 1.22 1.23 1.24 1.25 1.26 1.27"
+go_latest_version="1.27"
 date_postfix=`date +%Y%m%d`
 
 if [ $# != 0 ]; then
