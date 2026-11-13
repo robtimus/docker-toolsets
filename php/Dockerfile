@@ -4,8 +4,8 @@ FROM php:${PHP_VERSION}-cli-alpine
 
 ARG COMPOSER_HOME=/usr/local/lib/composer
 ARG XDEBUG_VERSION=3.5.3
-ARG PHPSTAN_VERSION=2.3.1
-ARG PHPCS_VERSION=3.13.6
+ARG PHPSTAN_VERSION=2.3.5
+ARG PHPCS_VERSION=4.0.4
 
 COPY --from=composer:lts /usr/bin/composer /usr/bin/composer
 
