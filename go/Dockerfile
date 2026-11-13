@@ -1,5 +1,5 @@
 ARG GO_VERSION=1.27
-ARG GOSEC_VERSION=2.29.0
+ARG GOSEC_VERSION=2.30.0
 
 FROM ghcr.io/securego/gosec:${GOSEC_VERSION} AS gosec
 
@@ -7,7 +7,7 @@ FROM golang:${GO_VERSION}-alpine
 
 ARG GODOC_VERSION=latest
 ARG GOJUNIT_VERSION=latest
-ARG GOLANGCI_LINT_VERSION=v2.14.0
+ARG GOLANGCI_LINT_VERSION=v2.15.0
 
 RUN apk update && apk add git && rm -rf /var/cache/apk/*
 
