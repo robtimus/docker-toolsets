@@ -2,7 +2,7 @@
 
 set -e
 
-php_versions="5.6 7.0 7.1 7.2 7.3 7.4 8.0 8.1 8.2 8.3 8.4 8.5"
+php_versions="8.0 8.1 8.2 8.3 8.4 8.5"
 php_latest_version="8.5"
 date_postfix=`date +%Y%m%d`
 
@@ -10,31 +10,8 @@ if [ $# != 0 ]; then
     php_versions="$*"
 fi
 
-function dockerfile_argument() {
-    case $1 in
-        5.6)
-            echo " -f Dockerfile5x"
-            ;;
-        *)
-            echo ""
-            ;;
-    esac
-}
-
 function xdebug_version_argument() {
     case $1 in
-        5.6)
-            echo "--build-arg XDEBUG_VERSION=2.5.5"
-            ;;
-        7.0)
-            echo "--build-arg XDEBUG_VERSION=2.6.1"
-            ;;
-        7.1)
-            echo "--build-arg XDEBUG_VERSION=2.9.8"
-            ;;
-        7.2 | 7.3 | 7.4)
-            echo "--build-arg XDEBUG_VERSION=3.1.6"
-            ;;
         *)
             echo ""
             ;;
@@ -43,15 +20,6 @@ function xdebug_version_argument() {
 
 function phpstan_version_argument() {
     case $1 in
-        7.0)
-            echo "--build-arg PHPSTAN_VERSION=0.9.3"
-            ;;
-        7.1)
-            echo "--build-arg PHPSTAN_VERSION=1.4.10"
-            ;;
-        7.2 | 7.3)
-            echo "--build-arg PHPSTAN_VERSION=1.12.34"
-            ;;
         *)
             echo ""
             ;;
@@ -66,21 +34,10 @@ function phpcs_version_argument() {
     esac
 }
 
-function phpstan_test_command() {
-    case $1 in
-        5.6)
-            echo "true"
-            ;;
-        *)
-            echo "phpstan --version"
-            ;;
-    esac
-}
-
 for v in $php_versions; do
-    docker build . $(dockerfile_argument $v) --build-arg PHP_VERSION=$v $(xdebug_version_argument $v) $(phpstan_version_argument $v) $(phpcs_version_argument -v) --no-cache -t robtimus/php-toolset:$v
+    docker build . --build-arg PHP_VERSION=$v $(xdebug_version_argument $v) $(phpstan_version_argument $v) $(phpcs_version_argument -v) --no-cache -t robtimus/php-toolset:$v
     # no need to show the xdebug version separately, that's included in php --version
-    docker run --rm robtimus/php-toolset:$v sh -c "php --version && composer --version && php -r 'phpinfo();' | grep xdebug >/dev/null && $(phpstan_test_command $v) && phpcs --version"
+    docker run --rm robtimus/php-toolset:$v sh -c "php --version && composer --version && php -r 'phpinfo();' | grep xdebug >/dev/null && phpstan --version && phpcs --version"
     echo
 done
 for v in $php_versions; do
